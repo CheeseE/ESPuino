@@ -164,29 +164,40 @@ void Button_Cyclic() {
 		Port_Cyclic();
 #endif
 
+#ifndef EXCLUDE_WAKEUP_BUTTON
 		if (System_AreControlsLocked()) {
 			return;
 		}
-
+#endif
 // Buttons can be mixed between GPIO and port-expander.
 // But at the same time only one of them can be for example NEXT_BUTTON
 #if defined(BUTTON_0_ENABLE) || defined(EXPANDER_0_ENABLE)
+if (!System_AreControlsLocked()) {
 		gButtons[0].currentState = Port_Read(NEXT_BUTTON) ^ BUTTON_0_ACTIVE_STATE;
+}
 #endif
 #if defined(BUTTON_1_ENABLE) || defined(EXPANDER_1_ENABLE)
+if (!System_AreControlsLocked()) {
 		gButtons[1].currentState = Port_Read(PREVIOUS_BUTTON) ^ BUTTON_1_ACTIVE_STATE;
+}
 #endif
 #if defined(BUTTON_2_ENABLE) || defined(EXPANDER_2_ENABLE)
+if (!System_AreControlsLocked()) {
 		gButtons[2].currentState = Port_Read(PAUSEPLAY_BUTTON) ^ BUTTON_2_ACTIVE_STATE;
+}
 #endif
 #if defined(BUTTON_3_ENABLE) || defined(EXPANDER_3_ENABLE)
 		gButtons[3].currentState = Port_Read(ROTARYENCODER_BUTTON) ^ BUTTON_3_ACTIVE_STATE;
 #endif
 #if defined(BUTTON_4_ENABLE) || defined(EXPANDER_4_ENABLE)
+if (!System_AreControlsLocked()) {
 		gButtons[4].currentState = Port_Read(BUTTON_4) ^ BUTTON_4_ACTIVE_STATE;
+}
 #endif
 #if defined(BUTTON_5_ENABLE) || defined(EXPANDER_5_ENABLE)
+if (!System_AreControlsLocked()) {
 		gButtons[5].currentState = Port_Read(BUTTON_5) ^ BUTTON_5_ACTIVE_STATE;
+}
 #endif
 
 		// Iterate over all buttons in struct-array
